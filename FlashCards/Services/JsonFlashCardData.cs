@@ -132,7 +132,7 @@ namespace FlashCards.Services
                 deck = GetDeck(updatedFlashCard.DeckId);
             }
             deck.Add(updatedFlashCard);
-
+            WriteToJson(data);
             return updatedFlashCard;
         }
 
