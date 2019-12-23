@@ -1,0 +1,17 @@
+﻿@model Deck
+@{
+    ViewData["Title"] = "CreateDeck";
+}
+
+<h1>Create Deck</h1>
+
+
+<form method="post" class="form-group">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" placeholder="Deck Name" class="form-control" />
+    </div>
+    
+    <input type="submit" name="save" value="save" class="btn btn-primary" />
+</form>
+

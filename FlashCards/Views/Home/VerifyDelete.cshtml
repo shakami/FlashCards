@@ -1,0 +1,27 @@
+﻿@model VerifyDeleteViewModel
+@{
+    ViewData["Title"] = "VerifyDelete";
+}
+
+<h3>Are you sure you'd like to delete this @Model.ItemType?</h3>
+
+
+<form class="form-group" method="post" action="/VerifyDeletePost">
+    <table>
+        <tr>
+            <td>
+                <input onclick="location.href='@Url.Action("Index")'"
+                       type="button" class="btn btn-primary" name="no" value="No" />
+            </td>
+            <td>
+                <input onclick="location.href='@Url.Action("VerifyDeletePost",
+                                              new VerifyDeleteViewModel
+                                              {
+                                                  Id = Model.Id,
+                                                  ItemType= Model.ItemType
+                                              })'"
+                       type="button" class="btn btn-danger" name="yes" value="Yes" />
+            </td>
+        </tr>
+    </table>
+</form>

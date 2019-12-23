@@ -1,0 +1,28 @@
+﻿@model FlashCards.ViewModels.FlashCardEditModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create a Flash Card</h1>
+
+<form method="post" class="form-group">
+    <div>
+        <label asp-for="FlashCard.Title"></label>
+        <input asp-for="FlashCard.Title" placeholder="Flash Card Title" class="form-control" />
+    </div>
+    
+    <textarea asp-for="FlashCard.Description"
+              placeholder="Write your description here"
+              class="form-control">
+    </textarea>
+    
+    <select asp-for="FlashCard.DeckId" class="form-control">
+        @foreach (var deck in Model.Decks)
+        {
+            <option value="@deck.Id">@deck.Name</option>
+        }
+    </select>
+
+    <input type="submit" name="save" value="save" class="btn btn-primary" />
+</form>
+
