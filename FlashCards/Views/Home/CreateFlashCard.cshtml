@@ -10,12 +10,14 @@
         <label asp-for="FlashCard.Title"></label>
         <input asp-for="FlashCard.Title" placeholder="Flash Card Title" class="form-control" />
     </div>
-    
+
+    <label asp-for="FlashCard.Description"></label>
     <textarea asp-for="FlashCard.Description"
               placeholder="Write your description here"
               class="form-control">
     </textarea>
-    
+
+    <label>Deck</label>
     <select asp-for="FlashCard.DeckId" class="form-control">
         @foreach (var deck in Model.Decks)
         {

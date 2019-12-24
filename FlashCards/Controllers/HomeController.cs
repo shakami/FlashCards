@@ -2,8 +2,6 @@
 using FlashCards.Services;
 using FlashCards.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using System.Linq;
 
 namespace FlashCards.Controllers
@@ -82,7 +80,6 @@ namespace FlashCards.Controllers
                 FlashCard = _flashCardData.GetFlashCard(flashCardId),
                 Decks = _flashCardData.GetAllDecks()
             };
-
             return View(model);
         }
 
@@ -108,7 +105,6 @@ namespace FlashCards.Controllers
             {
                 return RedirectToAction(nameof(CreateDeck), model);
             }
-
             _flashCardData.AddDeck(model);
 
             return RedirectToAction(nameof(Index));

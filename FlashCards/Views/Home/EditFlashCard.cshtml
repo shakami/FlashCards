@@ -6,46 +6,22 @@
 <h1>Edit</h1>
 
 <form method="post" class="form-group">
-    <table>
-        <tr>
-            <td>
-                <input asp-for="FlashCard.Id" class="form-control, text-hide" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label class="form-check-label">Deck</label>
-            </td>
-            <td>
-                <select asp-for="FlashCard.DeckId">
-                    @foreach (var deck in Model.Decks)
-                    {
-                        <option value="@deck.Id">@deck.Name</option>
-                    }
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label asp-for="FlashCard.Title" class="form-check-label"></label>
-            </td>
-            <td>
-                <input asp-for="FlashCard.Title" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label asp-for="FlashCard.Description" class="form-check-label"></label>
-            </td>
-            <td>
-                <textarea asp-for="FlashCard.Description" class="form-control"></textarea>
-            </td>
-        </tr>
-    </table>
+    <input asp-for="FlashCard.Id" class="form-control, text-hide" />
+    <label class="form-check-label">Deck</label>
+    <select asp-for="FlashCard.DeckId" class="form-control">
+        @foreach (var deck in Model.Decks)
+        {
+            <option value="@deck.Id">@deck.Name</option>
+        }
+    </select>
+    <label asp-for="FlashCard.Title" class="form-check-label"></label>
+    <input asp-for="FlashCard.Title" class="form-control" />
+    <label asp-for="FlashCard.Description" class="form-check-label"></label>
+    <textarea asp-for="FlashCard.Description" class="form-control"></textarea>
 
-    <input type="submit" name="save" value="save" class="btn btn-primary"/>
-    <input type="button" name="delete" value="delete" class="btn btn-danger" 
+    <input type="submit" name="save" value="save" class="btn btn-primary" />
+    <input type="button" name="delete" value="delete" class="btn btn-danger"
            onclick="location.href='@Url.Action("VerifyDelete",
                                   new VerifyDeleteViewModel { Id = Model.FlashCard.Id,
-                                                              ItemType = "flashCard" })'"/>
+                                                              ItemType = "flashCard" })'" />
 </form>

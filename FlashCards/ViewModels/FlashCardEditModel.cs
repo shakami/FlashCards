@@ -1,9 +1,6 @@
 ﻿using FlashCards.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlashCards.ViewModels
 {
@@ -11,8 +8,6 @@ namespace FlashCards.ViewModels
     {
         [Required]
         public FlashCard FlashCard { get; set; }
-
         public IEnumerable<Deck> Decks { get; set; }
-
     }
 }

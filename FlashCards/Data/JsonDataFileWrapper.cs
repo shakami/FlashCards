@@ -1,8 +1,5 @@
 ﻿using FlashCards.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlashCards.Data
 {
@@ -19,7 +16,12 @@ namespace FlashCards.Data
 
         public object GetInitialData()
         {
-            return new JsonDataFileWrapper() { _deckId = 1, _flashCardId = 1, Decks = new List<Deck>() };
-}
+            return new JsonDataFileWrapper()
+            {
+                _deckId = 1,
+                _flashCardId = 1,
+                Decks = new List<Deck>()
+            };
+        }
     }
 }

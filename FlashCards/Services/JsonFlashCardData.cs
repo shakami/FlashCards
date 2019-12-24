@@ -12,7 +12,6 @@ namespace FlashCards.Services
     public class JsonFlashCardData : IFlashCardData
     {
         private readonly string dataPath;
-
         private JsonDataFileWrapper data;
 
         public JsonFlashCardData() : this("./Data/data.json")
@@ -77,7 +76,6 @@ namespace FlashCards.Services
             {
                 return null;
             }
-            
             newFlashCard.DeckId = deckId;
             newFlashCard.Id = GetNewFlashCardId();
             deck.Add(newFlashCard);
@@ -118,15 +116,15 @@ namespace FlashCards.Services
             {
                 return null;
             }
-            
+
             var deck = GetDeck(oldCard.DeckId);
             if (deck == null)
             {
                 return null;
             }
-            
+
             deck.Remove(oldCard);
-            
+
             if (oldCard.DeckId != updatedFlashCard.DeckId)
             {
                 deck = GetDeck(updatedFlashCard.DeckId);
