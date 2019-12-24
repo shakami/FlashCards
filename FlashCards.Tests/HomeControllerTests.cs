@@ -1,4 +1,4 @@
-using FlashCards.Controllers;
+﻿using FlashCards.Controllers;
 using FlashCards.Models;
 using FlashCards.Services;
 using FlashCards.ViewModels;
@@ -55,7 +55,7 @@ namespace FlashCards.Tests
             };
             var testDeck = new Deck
             {
-                Name = "testDeck"
+                Name = "testDeck1"
             };
 
             testDeck = mockData.AddDeck(testDeck);
@@ -77,7 +77,7 @@ namespace FlashCards.Tests
             };
             var testDeck = new Deck
             {
-                Name = "testDeck"
+                Name = "testDeck2"
             };
 
             testDeck = mockData.AddDeck(testDeck);
@@ -89,6 +89,9 @@ namespace FlashCards.Tests
             controller.DeleteFlashCard(testCardId);
 
             Assert.IsNull(mockData.GetFlashCard(testCardId));
+
+            // cleanup
+            mockData.DeleteDeck(testDeckId);
         }
 
         [TestMethod]
@@ -101,7 +104,7 @@ namespace FlashCards.Tests
             };
             var testDeck = new Deck
             {
-                Name = "testDeck"
+                Name = "testDeck3"
             };
 
             testDeck = mockData.AddDeck(testDeck);
@@ -130,7 +133,7 @@ namespace FlashCards.Tests
             };
             var testDeck = new Deck
             {
-                Name = "testDeck"
+                Name = "testDeck4"
             };
 
             testDeck = mockData.AddDeck(testDeck);
@@ -152,9 +155,53 @@ namespace FlashCards.Tests
                 Decks = mockData.GetAllDecks(),
                 FlashCard = editedCard
             });
-            
+
             Assert.AreNotSame(testCard, mockData.GetFlashCard(testCardId));
             Assert.IsNotNull(mockData.GetCardsInDeck(testDeckId).Contains(editedCard));
+
+            // cleanup
+            mockData.DeleteDeck(testDeckId);
+        }
+
+        [TestMethod]
+        public void CreateDeckTest()
+        {
+            var testDeck = new Deck
+            {
+                Name = "testDeck5"
+            };
+            Assert.IsFalse(mockData.GetAllDecks().Contains(testDeck));
+
+            controller.CreateDeck(testDeck);
+
+            Assert.IsTrue(mockData.GetAllDecks().Contains(testDeck));
+
+            // cleanup
+            testDeck = mockData.GetAllDecks().FirstOrDefault(d => d.Name == testDeck.Name);
+            mockData.DeleteDeck(testDeck.Id);
+        }
+
+        [TestMethod]
+        public void VerifyDeleteDeckTest()
+        {
+            var testDeck = new Deck
+            {
+                Name = "testDeck6"
+            };
+            testDeck = mockData.AddDeck(testDeck);
+            var testDeckId = testDeck.Id;
+            Assert.IsTrue(mockData.GetAllDecks().Contains(testDeck));
+            
+            var model = new VerifyDeleteViewModel
+            {
+                Id = testDeckId,
+                ItemType = "deck"
+            };
+            var viewResult = controller.VerifyDeletePost(model) as RedirectToActionResult;
+            Assert.AreEqual("DeleteDeck", viewResult.ActionName);
+
+            var actual = (int)viewResult.RouteValues.ElementAtOrDefault(0).Value;
+            Assert.AreEqual(testDeckId, actual);
 
             // cleanup
             mockData.DeleteDeck(testDeckId);
