@@ -9,13 +9,17 @@
     <div>
         <label asp-for="FlashCard.Title"></label>
         <input asp-for="FlashCard.Title" placeholder="Flash Card Title" class="form-control" />
+        <span asp-validation-for="FlashCard.Title" class="text-danger"></span>
     </div>
 
-    <label asp-for="FlashCard.Description"></label>
-    <textarea asp-for="FlashCard.Description"
-              placeholder="Write your description here"
-              class="form-control">
-    </textarea>
+    <div>
+        <label asp-for="FlashCard.Description"></label>
+        <textarea asp-for="FlashCard.Description"
+                  placeholder="Write your description here"
+                  class="form-control">
+        </textarea>
+        <span asp-validation-for="FlashCard.Description" class="text-danger"></span>
+    </div>
 
     <label>Deck</label>
     <select asp-for="FlashCard.DeckId" class="form-control">

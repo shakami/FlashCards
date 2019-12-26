@@ -9,6 +9,7 @@
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" placeholder="Deck Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     
     <input type="submit" name="save" value="save" class="btn btn-primary" />

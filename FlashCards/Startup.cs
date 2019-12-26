@@ -37,7 +37,7 @@ namespace FlashCards
                 app.UseHsts();
             }
             app.UseStaticFiles();
-            
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
