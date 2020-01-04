@@ -26,7 +26,7 @@
         <div class="card-deck">
             @foreach (var flashCard in Model.Cards)
             {
-                <div class="card text-white bg-dark mb-3" style="min-height: 18rem; min-width:15rem; max-width:15rem;">
+                <div class="card text-white bg-dark mb-3" style="min-height: 18rem; min-width: 15rem; max-width: 15rem;">
                     <div class="card-header">
 
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -57,11 +57,11 @@
                     </div>
                 </div>
             }
-            <div class="card text-white bg-secondary mb-3" style="min-height: 18rem; min-width:15rem; max-width: 15rem;">
+            <div class="card text-white bg-secondary mb-3" style="min-height: 18rem; min-width: 15rem; max-width: 15rem;">
                 <div class="card-header">+</div>
                 <div class="card-body">
                     <h3 class="card-title">
-                        <a class="btn btn-success" asp-action="CreateFlashCard">New</a>
+                        <a class="btn btn-success" asp-action="CreateFlashCard" asp-route-deckId="@Model.Id">New Card</a>
                     </h3>
                 </div>
             </div>

@@ -6,27 +6,33 @@
 <h1>Flash Cards</h1>
 <label>Select a deck</label>
 
-<div class="card-columns">
-    @foreach (var deck in Model)
-    {
-        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <h5 class="card-title">
-                    <a class="text-white"
-                       asp-action="DeckDisplay"
-                       asp-route-id=@deck.Id>
-                        @deck.Name
-                    </a>
-                </h5>
-            </div>
-        </div>
-    }
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="card-deck">
+            @foreach (var deck in Model)
+            {
+                <div class="card text-white bg-primary mb-3" style="min-height: 18rem; min-width: 15rem; max-width: 15rem;">
+                    <div class="card-header" style="min-height: 3rem;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a class="text-white"
+                               asp-action="DeckDisplay"
+                               asp-route-id=@deck.Id>
+                                @deck.Name
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            }
 
-    <div class="card text-white bg-info mb-3" style="max-width: 18rem">
-        <div class="card-header"></div>
-        <div class="card-body">
-            <h5 class="card-title"><a asp-action="CreateDeck" class="card-text">New</a></h5>
+            <div class="card text-white bg-secondary mb-3" style="min-height: 18rem; min-width: 15rem; max-width: 15rem;">
+                <div class="card-header" style="min-height: 3rem;">+</div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a class="btn btn-success" asp-action="CreateDeck" class="card-text">New Deck</a>
+                    </h5>
+                </div>
+            </div>
         </div>
     </div>
 </div>

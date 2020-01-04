@@ -42,17 +42,18 @@ namespace FlashCards.Controllers
 
         public IActionResult DeleteFlashCard(int id)
         {
+            var deckId = _flashCardData.GetFlashCard(id).DeckId;
             _flashCardData.DeleteFlashCard(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(DeckDisplay), new { id = deckId });
         }
 
         [HttpGet]
-        public IActionResult CreateFlashCard()
+        public IActionResult CreateFlashCard(int deckId)
         {
             var model = new FlashCardEditModel
             {
                 Decks = _flashCardData.GetAllDecks(),
-                FlashCard = new FlashCard()
+                FlashCard = new FlashCard { DeckId = deckId }
             };
             return View(model);
         }
