@@ -12,13 +12,13 @@ namespace FlashCards.Tests
     [TestClass]
     public class HomeControllerTests
     {
-        static IFlashCardData mockData;
+        static IFlashCardDataService mockData;
         static HomeController controller;
 
         [ClassInitialize]
         public static void HomeControllerInitialize(TestContext context)
         {
-            mockData = new JsonFlashCardData("./Data/testData.json");
+            mockData = new JsonFlashCardDataService("./Data/testData.json");
             controller = new HomeController(mockData);
         }
 

@@ -1,25 +1,24 @@
-﻿using FlashCards.Models;
+﻿using FlashCards.Data;
+using FlashCards.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.IO;
-using FlashCards.Data;
+using System.Linq;
 
 namespace FlashCards.Services
 {
-    public class JsonFlashCardData : IFlashCardData
+    public class JsonFlashCardDataService : IFlashCardDataService
     {
-        private readonly string dataPath;
+        private readonly string DataPath;
         private JsonDataFileWrapper data;
 
-        public JsonFlashCardData() : this("./Data/data.json")
+        public JsonFlashCardDataService() : this("./Data/data.json")
         { }
 
-        public JsonFlashCardData(string dataPath)
+        public JsonFlashCardDataService(string dataPath)
         {
-            this.dataPath = dataPath;
+            this.DataPath = dataPath;
             ReadFromJson();
             if (data == null)
             {
@@ -30,30 +29,37 @@ namespace FlashCards.Services
 
         private void ReadFromJson()
         {
-            using StreamReader sr = new StreamReader(dataPath);
             try
             {
+                using StreamReader sr = new StreamReader(DataPath);
                 data = JsonConvert.DeserializeObject<JsonDataFileWrapper>(sr.ReadToEnd());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Exception dataExcepion = new FileLoadException("data file could not be read. invalid file/format.", ex);
                 data = new JsonDataFileWrapper();
                 InitializeJson();
                 ReadFromJson();
-                throw;
+                throw dataExcepion;
             }
         }
 
-        private void WriteToJson(Object output)
+        private void WriteToJson(JsonDataFileWrapper output)
         {
-            using StreamWriter sw = new StreamWriter(dataPath);
-            sw.Write(JsonConvert.SerializeObject(output, Formatting.Indented));
+            try
+            {
+                using StreamWriter sw = new StreamWriter(DataPath);
+                sw.Write(JsonConvert.SerializeObject(output, Formatting.Indented));
+            }
+            catch (Exception ex)
+            {
+                throw new IOException("was not able to write to the data file.", ex);
+            }
         }
 
         private void InitializeJson()
         {
-            using StreamWriter sw = new StreamWriter(dataPath);
-            sw.Write(JsonConvert.SerializeObject(data.GetInitialData(), Formatting.Indented));
+            WriteToJson(data.GetInitialData());
         }
 
         public Deck AddDeck(Deck newDeck)
@@ -100,7 +106,9 @@ namespace FlashCards.Services
 
         public FlashCard GetFlashCard(int flashCardId)
         {
-            return data.Decks.SelectMany(d => d.Cards).FirstOrDefault(f => f.Id == flashCardId);
+            return data.Decks
+                .SelectMany(d => d.Cards)
+                .FirstOrDefault(f => f.Id == flashCardId);
         }
 
         public void DeleteDeck(int deckId)
@@ -123,13 +131,18 @@ namespace FlashCards.Services
                 return null;
             }
 
-            deck.Remove(oldCard);
-
-            if (oldCard.DeckId != updatedFlashCard.DeckId)
+            if (oldCard.DeckId == updatedFlashCard.DeckId)
             {
-                deck = GetDeck(updatedFlashCard.DeckId);
+                oldCard.Title = updatedFlashCard.Title;
+                oldCard.Description = updatedFlashCard.Description;
             }
-            deck.Add(updatedFlashCard);
+            else
+            {
+                deck.Remove(oldCard);
+                deck = GetDeck(updatedFlashCard.DeckId);
+                deck.Add(updatedFlashCard);
+            }
+
             WriteToJson(data);
             return updatedFlashCard;
         }

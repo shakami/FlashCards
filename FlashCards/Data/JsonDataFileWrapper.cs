@@ -14,7 +14,7 @@ namespace FlashCards.Data
             Decks = new List<Deck>();
         }
 
-        public object GetInitialData()
+        public JsonDataFileWrapper GetInitialData()
         {
             return new JsonDataFileWrapper()
             {

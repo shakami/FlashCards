@@ -2,22 +2,28 @@
 using FlashCards.Services;
 using FlashCards.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Linq;
 
 namespace FlashCards.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IFlashCardData _flashCardData;
+        private readonly IFlashCardDataService _flashCardData;
 
-        public HomeController(IFlashCardData flashCardData)
+        public HomeController(IFlashCardDataService flashCardData)
         {
             _flashCardData = flashCardData;
         }
 
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         public IActionResult Index()
         {
-            var model = _flashCardData.GetAllDecks();
+            var model = _flashCardData.GetAllDecks().ToList();
             return View(model);
         }
 
@@ -56,20 +62,17 @@ namespace FlashCards.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(CreateFlashCard));
+                return RedirectToAction(nameof(CreateFlashCard), model);
             }
-            else
+            FlashCard newFlashCard = new FlashCard
             {
-                FlashCard newFlashCard = new FlashCard
-                {
-                    Title = model.FlashCard.Title,
-                    Description = model.FlashCard.Description,
-                    DeckId = model.FlashCard.DeckId
-                };
+                Title = model.FlashCard.Title,
+                Description = model.FlashCard.Description,
+                DeckId = model.FlashCard.DeckId
+            };
 
-                newFlashCard = _flashCardData.AddFlashCard(newFlashCard, newFlashCard.DeckId);
-                return RedirectToAction(nameof(DeckDisplay), new { id = newFlashCard.DeckId });
-            }
+            newFlashCard = _flashCardData.AddFlashCard(newFlashCard, newFlashCard.DeckId);
+            return RedirectToAction(nameof(DeckDisplay), new { id = newFlashCard.DeckId });
         }
 
         [HttpGet]
@@ -87,8 +90,12 @@ namespace FlashCards.Controllers
         [HttpPost]
         public IActionResult EditFlashCard(FlashCardEditModel model)
         {
-            _flashCardData.EditFlashCard(model.FlashCard);
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(EditFlashCard), model);
+            }
 
+            _flashCardData.EditFlashCard(model.FlashCard);
             return RedirectToAction(nameof(DeckDisplay), new { id = model.FlashCard.DeckId });
         }
 

@@ -5,47 +5,66 @@
 
 <h1>@Model.Name</h1>
 
-<div class="card-columns">
-    @foreach (var flashCard in Model.Cards)
-    {
-        <div class="card text-white bg-dark mb-3" style="min-height: 18rem; max-width: 18rem">
-            <div class="card-header">
-                <a onclick="document.getElementById('@string.Concat("description",flashCard.Id)')
-                                        .classList.toggle('text-hide');">
-                    show/hide
-                </a>
-                <a asp-action="EditFlashCard"
-                   asp-route-flashCardId="@flashCard.Id"
-                   class="float-right">
-                    edit
-                </a>
-            </div>
-
-            <div class="card-body">
-                <h3 class="card-title">@flashCard.Title</h3>
-                <h5 id=@string.Concat("description",flashCard.Id)
-                    class="card-text, text-hide">
-                    @flashCard.Description
-                </h5>
-            </div>
-        </div>
-    }
-    <div class="card text-white bg-info mb-3" style="min-height: 18rem; max-width: 18rem">
-        <div class="card-header">+</div>
-        <div class="card-body">
-            <h3 class="card-title"><a asp-action="CreateFlashCard" class="card-text">New</a></h3>
-        </div>
-    </div>
-</div>
+<br />
 
 <div>
-    <form method="post">
-        <input onclick="location.href='@Url.Action("VerifyDelete",
+    <a class="btn btn-primary" asp-action="Index">Back</a>
+
+    <input onclick="location.href='@Url.Action("VerifyDelete",
                                       new VerifyDeleteViewModel { Id = Model.Id,
                                                                   ItemType = "deck" })'"
-               type="button"
-               name="delete"
-               value="delete deck"
-               class="btn btn-danger" />
-    </form>
+           type="button"
+           name="delete"
+           value="delete deck"
+           class="btn btn-danger" />
+</div>
+
+<br />
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="card-deck">
+            @foreach (var flashCard in Model.Cards)
+            {
+                <div class="card text-white bg-dark mb-3" style="min-height: 18rem; min-width:15rem; max-width:15rem;">
+                    <div class="card-header">
+
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="options" id="option1" autocomplete="off"
+                                       onchange="document.getElementById('@string.Concat("description",flashCard.Id)')
+                                            .classList.remove('text-hide');" /> Show
+                            </label>
+                            <label class="btn btn-secondary btn-sm active">
+                                <input type="radio" name="options" id="option2" autocomplete="off" checked
+                                       onchange="document.getElementById('@string.Concat("description",flashCard.Id)')
+                                            .classList.add('text-hide');" /> Hide
+                            </label>
+                        </div>
+                        <a asp-action="EditFlashCard"
+                           asp-route-flashCardId="@flashCard.Id"
+                           class="btn-sm btn-info float-right">
+                            edit
+                        </a>
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title">@flashCard.Title</h3>
+                        <h5 id=@string.Concat("description",flashCard.Id)
+                            class="card-text, text-hide">
+                            @flashCard.Description
+                        </h5>
+                    </div>
+                </div>
+            }
+            <div class="card text-white bg-secondary mb-3" style="min-height: 18rem; min-width:15rem; max-width: 15rem;">
+                <div class="card-header">+</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a class="btn btn-success" asp-action="CreateFlashCard">New</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -20,31 +20,14 @@ namespace FlashCards.Models
             Cards = new List<FlashCard>();
         }
 
-        public int Count => Cards.Count;
-
         public void Add(FlashCard flashCard)
         {
             Cards.Add(flashCard);
         }
 
-        public void Clear()
-        {
-            Cards.Clear();
-        }
-
         public bool Remove(FlashCard flashCard)
         {
             return Cards.Remove(flashCard);
-        }
-
-        public void Rename(string newName)
-        {
-            Name = newName;
-        }
-
-        public IEnumerable<FlashCard> GetCards()
-        {
-            return Cards;
         }
     }
 }
