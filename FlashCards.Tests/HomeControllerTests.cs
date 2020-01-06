@@ -163,7 +163,7 @@ namespace FlashCards.Tests
                 Id = testCardId,
                 DeckId = testDeckId,
                 Title = "edited",
-                Description = "edited description"
+                Description = "esited description"
             };
 
             //-- Act
@@ -174,8 +174,9 @@ namespace FlashCards.Tests
             });
 
             //-- Assert
-            Assert.AreNotSame(testCard, mockData.GetFlashCard(testCardId));
-            Assert.IsNotNull(mockData.GetCardsInDeck(testDeckId).Contains(editedCard));
+            Assert.AreEqual(editedCard.Title, testCard.Title);
+            Assert.AreEqual(editedCard.Description, testCard.Description);
+            Assert.IsTrue(mockData.GetCardsInDeck(testDeckId).ToList().Contains(testCard));
 
             // cleanup
             mockData.DeleteDeck(testDeckId);

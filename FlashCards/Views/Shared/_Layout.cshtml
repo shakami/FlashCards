@@ -11,15 +11,19 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Flash Cards</a>
-                @await Component.InvokeAsync("NavbarDeckList")
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 
-                @*RenderSection("navbarDeckList", required: false)*@
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            @await Component.InvokeAsync("NavbarDeckList")
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
