@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashCards", "FlashCards\FlashCards.csproj", "{4A901E6E-AC83-4BAD-B13C-BD38AE7CC8F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashCards.Tests", "FlashCards.Tests\FlashCards.Tests.csproj", "{F654C910-D9FF-4E92-948B-7D2988D112F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashCards.Tests", "FlashCards.Tests\FlashCards.Tests.csproj", "{F654C910-D9FF-4E92-948B-7D2988D112F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

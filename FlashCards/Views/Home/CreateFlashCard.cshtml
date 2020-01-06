@@ -7,28 +7,36 @@
 
 <form method="post" class="form-group">
     <div>
-        <label asp-for="FlashCard.Title"></label>
+        <label class="form-check-label" asp-for="Decks">Deck</label>
+        <select asp-for="FlashCard.DeckId" class="form-control">
+            @foreach (var deck in Model.Decks)
+            {
+                <option value="@deck.Id">@deck.Name</option>
+            }
+        </select>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="FlashCard.Title" class="form-check-label"></label>
         <input asp-for="FlashCard.Title" placeholder="Flash Card Title" class="form-control" />
         <span asp-validation-for="FlashCard.Title" class="text-danger"></span>
     </div>
+    <br />
 
     <div>
-        <label asp-for="FlashCard.Description"></label>
+        <label asp-for="FlashCard.Description" class="form-check-label"></label>
         <textarea asp-for="FlashCard.Description"
                   placeholder="Write your description here"
                   class="form-control">
         </textarea>
         <span asp-validation-for="FlashCard.Description" class="text-danger"></span>
     </div>
+    <br />
 
-    <label>Deck</label>
-    <select asp-for="FlashCard.DeckId" class="form-control">
-        @foreach (var deck in Model.Decks)
-        {
-            <option value="@deck.Id">@deck.Name</option>
-        }
-    </select>
-
-    <input type="submit" name="save" value="save" class="btn btn-primary" />
+    <div>
+        <input type="submit" name="save" value="save" class="btn btn-primary" />
+        <a class="btn btn-warning" asp-action="DeckDisplay" asp-route-id="@Model.FlashCard.DeckId">cancel</a>
+    </div>
 </form>
 
