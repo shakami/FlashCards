@@ -12,7 +12,7 @@ namespace FlashCards.Tests
     [TestClass]
     public class HomeControllerTests
     {
-        static IFlashCardDataService mockData;
+        static IFlashCardRepository mockData;
         static HomeController controller;
 
         [ClassInitialize]

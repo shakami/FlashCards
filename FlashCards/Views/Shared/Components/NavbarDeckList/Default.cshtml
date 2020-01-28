@@ -9,11 +9,11 @@
         @foreach (var deck in Model)
         {
             <a class="dropdown-item"
-               asp-action="DeckDisplay" asp-controller="Home" asp-route-id="@deck.Id">@deck.Name</a>
+               asp-action="GetCards" asp-controller="Cards" asp-route-deckId="@deck.Id">@deck.Name</a>
         }
         
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-success"
-           asp-action="CreateDeck" asp-controller="Home">New Deck</a>
+           asp-action="CreateDeck" asp-controller="Decks">New Deck</a>
     </div>
 </div>

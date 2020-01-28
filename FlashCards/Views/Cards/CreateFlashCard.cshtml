@@ -1,6 +1,6 @@
 ﻿@model FlashCards.ViewModels.FlashCardEditModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Flash Card";
 }
 
 <h1>Create a Flash Card</h1>
@@ -35,8 +35,8 @@
     <br />
 
     <div>
-        <input type="submit" name="save" value="save" class="btn btn-primary" />
-        <a class="btn btn-warning" asp-action="DeckDisplay" asp-route-id="@Model.FlashCard.DeckId">cancel</a>
+        <input type="submit" name="save" value="Save" class="btn btn-primary" />
+        <a class="btn btn-warning" asp-action="GetCards" asp-route-deckId="@Model.FlashCard.DeckId">Cancel</a>
     </div>
 </form>
 

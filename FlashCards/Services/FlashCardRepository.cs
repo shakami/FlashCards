@@ -8,15 +8,15 @@ using System.Linq;
 
 namespace FlashCards.Services
 {
-    public class JsonFlashCardDataService : IFlashCardDataService
+    public class FlashCardRepository : IFlashCardRepository
     {
         private readonly string DataPath;
         private JsonDataFileWrapper data;
 
-        public JsonFlashCardDataService() : this("./Data/data.json")
+        public FlashCardRepository() : this("./Data/data.json")
         { }
 
-        public JsonFlashCardDataService(string dataPath)
+        public FlashCardRepository(string dataPath)
         {
             this.DataPath = dataPath;
             ReadFromJson();

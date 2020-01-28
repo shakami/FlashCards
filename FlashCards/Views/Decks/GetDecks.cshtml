@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Deck>
 @{
-    ViewData["Title"] = "Flash Cards";
+    ViewData["Title"] = "Decks";
 }
 
-<h1>Flash Card Decks</h1>
+<h1>Decks</h1>
 <br />
 
 <div class="container-fluid">
@@ -16,9 +16,8 @@
                     <div class="card-body">
                         <h5 class="card-title">
                             <a class="text-white"
-                               asp-action="DeckDisplay"
-                               asp-route-id=@deck.Id>
-                                @deck.Name
+                               href="Decks/@deck.Id/Cards">
+                               @deck.Name
                             </a>
                         </h5>
                     </div>

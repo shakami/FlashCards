@@ -6,7 +6,7 @@
 <h1>Create Deck</h1>
 
 <div>
-    <form class="form-group" asp-action="CreateDeck" asp-controller="Home">
+    <form class="form-group" asp-action="CreateDeck" asp-controller="Decks">
         <div>
             <label asp-for="Name" class="col-form-label"></label>
             <input asp-for="Name" placeholder="Deck Name" class="form-control" />
@@ -15,6 +15,6 @@
         <br />
 
         <input type="submit" name="save" value="save" class="btn btn-primary col-1" />
-        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary col-1">Cancel</a>
+        <a asp-action="GetDecks" asp-controller="Decks" class="btn btn-secondary col-1">Cancel</a>
     </form>
 </div>

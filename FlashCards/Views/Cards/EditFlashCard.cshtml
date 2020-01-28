@@ -1,6 +1,6 @@
 ﻿@model FlashCards.ViewModels.FlashCardEditModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Flash Card";
 }
 
 <h1>Edit Flash Card</h1>
@@ -32,13 +32,27 @@
         <span asp-validation-for="FlashCard.Description" class="text-danger"></span>
     </div>
     <br />
-    
+
     <div>
-        <input type="submit" name="save" value="save" class="btn btn-primary" />
-        <input type="button" name="delete" value="delete" class="btn btn-danger"
-               onclick="location.href='@Url.Action("VerifyDelete",
-                                  new VerifyDeleteViewModel { Id = Model.FlashCard.Id,
-                                                              ItemType = "flashCard" })'" />
-        <a class="btn btn-warning" asp-action="DeckDisplay" asp-route-id="@Model.FlashCard.DeckId">cancel</a>
+        <input type="submit" name="save" value="Save" class="btn btn-primary" />
+
+        <button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+        <a class="btn btn-warning" asp-action="GetCards" asp-route-deckId="@Model.FlashCard.DeckId">Cancel</a>
+
+        <br />
+        <br />
+
+        <partial name="_VerifyDelete"
+                 model='new VerifyDeleteViewModel
+                            {
+                                ItemType="card",
+                                Id=Model.FlashCard.Id
+                            }' />
+
+        @*<input type="button" name="delete" value="delete" class="btn btn-danger"
+            onclick="location.href='@Url.Action("VerifyDelete",
+                               new VerifyDeleteViewModel { Id = Model.FlashCard.Id,
+                                                           ItemType = "flashCard" })'" />
+        *@
     </div>
 </form>

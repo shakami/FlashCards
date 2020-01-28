@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FlashCards.Services
 {
-    public interface IFlashCardDataService
+    public interface IFlashCardRepository
     {
         Deck AddDeck(Deck newDeck);
         void DeleteDeck(int deckId);

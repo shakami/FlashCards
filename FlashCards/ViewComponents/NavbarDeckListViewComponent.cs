@@ -9,9 +9,9 @@ namespace FlashCards.ViewComponents
 {
     public class NavbarDeckListViewComponent : ViewComponent
     {
-        private readonly IFlashCardDataService _flashCardDataService;
+        private readonly IFlashCardRepository _flashCardDataService;
 
-        public NavbarDeckListViewComponent(IFlashCardDataService flashCardDataService)
+        public NavbarDeckListViewComponent(IFlashCardRepository flashCardDataService)
         {
             _flashCardDataService = flashCardDataService;
         }
