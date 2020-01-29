@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FlashCards.Models;
-using FlashCards.Services;
+using FlashCards.Entities;
+using FlashCards.Repository;
 using FlashCards.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +23,7 @@ namespace FlashCards.Controllers
         [HttpGet]
         public IActionResult GetCards(int deckId)
         {
-            var model = _flashCardData.GetAllDecks().FirstOrDefault(d => d.Id == deckId);
+            var model = _flashCardData.GetDecks().FirstOrDefault(d => d.Id == deckId);
             return View(model);
         }
 
@@ -32,8 +32,8 @@ namespace FlashCards.Controllers
         {
             var model = new FlashCardEditModel
             {
-                Decks = _flashCardData.GetAllDecks(),
-                FlashCard = new FlashCard { DeckId = deckId }
+                Decks = _flashCardData.GetDecks(),
+                FlashCard = new Card { DeckId = deckId }
             };
             return View(model);
         }
@@ -45,14 +45,14 @@ namespace FlashCards.Controllers
             {
                 return RedirectToAction(nameof(CreateFlashCard), model);
             }
-            FlashCard newFlashCard = new FlashCard
+            Card newFlashCard = new Card
             {
                 Title = model.FlashCard.Title,
                 Description = model.FlashCard.Description,
                 DeckId = model.FlashCard.DeckId
             };
 
-            newFlashCard = _flashCardData.AddFlashCard(newFlashCard, newFlashCard.DeckId);
+            newFlashCard = _flashCardData.AddCard(newFlashCard, newFlashCard.DeckId);
             return RedirectToAction(nameof(GetCards), new { deckId = newFlashCard.DeckId });
         }
 
@@ -61,8 +61,8 @@ namespace FlashCards.Controllers
         {
             FlashCardEditModel model = new FlashCardEditModel
             {
-                FlashCard = _flashCardData.GetFlashCard(flashCardId),
-                Decks = _flashCardData.GetAllDecks()
+                FlashCard = _flashCardData.GetCard(flashCardId),
+                Decks = _flashCardData.GetDecks()
             };
             return View(model);
         }
@@ -75,15 +75,18 @@ namespace FlashCards.Controllers
                 return RedirectToAction(nameof(EditFlashCard), model);
             }
 
-            _flashCardData.EditFlashCard(model.FlashCard);
+            _flashCardData.UpdateCard(model.FlashCard);
             return RedirectToAction(nameof(GetCards), new { deckId = model.FlashCard.DeckId });
         }
 
         [HttpGet("{flashCardId}/Delete")]
         public IActionResult DeleteFlashCard(int flashCardId)
         {
-            var deckId = _flashCardData.GetFlashCard(flashCardId).DeckId;
-            _flashCardData.DeleteFlashCard(flashCardId);
+            var deckId = _flashCardData.GetCard(flashCardId).DeckId;
+            
+            var cardToRemove = _flashCardData.GetCard(flashCardId);
+            _flashCardData.DeleteCard(cardToRemove);
+
             return RedirectToAction(nameof(GetCards), new { deckId = deckId });
         }
     }

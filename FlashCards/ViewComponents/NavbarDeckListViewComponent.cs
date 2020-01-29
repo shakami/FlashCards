@@ -1,4 +1,4 @@
-﻿using FlashCards.Services;
+﻿using FlashCards.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace FlashCards.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var model = _flashCardDataService.GetAllDecks();
+            var model = _flashCardDataService.GetDecks();
             return View(model);
         }
     }

@@ -1,5 +1,4 @@
-﻿using FlashCards.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace FlashCards.Controllers
@@ -8,12 +7,15 @@ namespace FlashCards.Controllers
     {
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ViewModels.ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
 
         public IActionResult Index()
         {
-            return RedirectToRoute("GetDecks");
+            return RedirectToAction("Index", "Decks");
         }
     }
 }

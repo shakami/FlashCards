@@ -1,6 +1,6 @@
 using System;
 
-namespace FlashCards.Models
+namespace FlashCards.ViewModels
 {
     public class ErrorViewModel
     {

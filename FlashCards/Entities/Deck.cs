@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlashCards.Models
+namespace FlashCards.Entities
 {
     public class Deck
     {
-        public List<FlashCard> Cards;
+        public List<Card> Cards;
         public int Id { get; set; }
 
         [Required]
@@ -17,15 +17,15 @@ namespace FlashCards.Models
 
         public Deck()
         {
-            Cards = new List<FlashCard>();
+            Cards = new List<Card>();
         }
 
-        public void Add(FlashCard flashCard)
+        public void Add(Card flashCard)
         {
             Cards.Add(flashCard);
         }
 
-        public bool Remove(FlashCard flashCard)
+        public bool Remove(Card flashCard)
         {
             return Cards.Remove(flashCard);
         }

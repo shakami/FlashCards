@@ -30,7 +30,7 @@ namespace FlashCards.Tests
 
             //-- Act
             var model = indexResult.Model as IEnumerable<Deck>;
-            var expected = mockData.GetAllDecks().Count();
+            var expected = mockData.GetDecks().Count();
 
             //-- Assert
             Assert.AreEqual(expected, model.Count());
@@ -40,8 +40,8 @@ namespace FlashCards.Tests
         public void DeckDisplayShouldPopulateCards()
         {
             //-- Arrange
-            var testDeckId = mockData.GetAllDecks().FirstOrDefault().Id;
-            var testDeck = mockData.GetCardsInDeck(testDeckId);
+            var testDeckId = mockData.GetDecks().FirstOrDefault().Id;
+            var testDeck = mockData.GetCards(testDeckId);
 
             //-- Act
             var deckDisplayResult = controller.DeckDisplay(testDeckId) as ViewResult;
@@ -67,13 +67,13 @@ namespace FlashCards.Tests
 
             testDeck = mockData.AddDeck(testDeck);
             var testDeckId = testDeck.Id;
-            mockData.AddFlashCard(testCard, testDeckId);
+            mockData.AddCard(testCard, testDeckId);
 
             //-- Act
             controller.DeleteDeck(testDeckId);
 
             //-- Assert
-            Assert.IsTrue(!mockData.GetAllDecks().Contains(testDeck));
+            Assert.IsTrue(!mockData.GetDecks().Contains(testDeck));
         }
 
         [TestMethod]
@@ -92,15 +92,15 @@ namespace FlashCards.Tests
 
             testDeck = mockData.AddDeck(testDeck);
             var testDeckId = testDeck.Id;
-            testCard = mockData.AddFlashCard(testCard, testDeckId);
+            testCard = mockData.AddCard(testCard, testDeckId);
             var testCardId = testCard.Id;
-            Assert.IsNotNull(mockData.GetFlashCard(testCardId));
+            Assert.IsNotNull(mockData.GetCard(testCardId));
 
             //-- Act
             controller.DeleteFlashCard(testCardId);
 
             //-- Assert
-            Assert.IsNull(mockData.GetFlashCard(testCardId));
+            Assert.IsNull(mockData.GetCard(testCardId));
 
             // cleanup
             mockData.DeleteDeck(testDeckId);
@@ -127,12 +127,12 @@ namespace FlashCards.Tests
             //-- Act
             controller.CreateFlashCard(new FlashCardEditModel()
             {
-                Decks = mockData.GetAllDecks(),
+                Decks = mockData.GetDecks(),
                 FlashCard = testCard
             });
 
             //-- Assert
-            Assert.IsNotNull(mockData.GetCardsInDeck(testDeckId).Contains(testCard));
+            Assert.IsNotNull(mockData.GetCards(testDeckId).Contains(testCard));
 
             // cleanup
             mockData.DeleteDeck(testDeckId);
@@ -155,7 +155,7 @@ namespace FlashCards.Tests
             testDeck = mockData.AddDeck(testDeck);
             var testDeckId = testDeck.Id;
             testCard.DeckId = testDeckId;
-            testCard = mockData.AddFlashCard(testCard, testDeckId);
+            testCard = mockData.AddCard(testCard, testDeckId);
             var testCardId = testCard.Id;
 
             var editedCard = new FlashCard
@@ -169,14 +169,14 @@ namespace FlashCards.Tests
             //-- Act
             controller.EditFlashCard(new FlashCardEditModel()
             {
-                Decks = mockData.GetAllDecks(),
+                Decks = mockData.GetDecks(),
                 FlashCard = editedCard
             });
 
             //-- Assert
             Assert.AreEqual(editedCard.Title, testCard.Title);
             Assert.AreEqual(editedCard.Description, testCard.Description);
-            Assert.IsTrue(mockData.GetCardsInDeck(testDeckId).ToList().Contains(testCard));
+            Assert.IsTrue(mockData.GetCards(testDeckId).ToList().Contains(testCard));
 
             // cleanup
             mockData.DeleteDeck(testDeckId);
@@ -190,16 +190,16 @@ namespace FlashCards.Tests
             {
                 Name = "testDeck5"
             };
-            Assert.IsFalse(mockData.GetAllDecks().Contains(testDeck));
+            Assert.IsFalse(mockData.GetDecks().Contains(testDeck));
 
             //-- Act
             controller.CreateDeck(testDeck);
 
             //-- Assert
-            Assert.IsTrue(mockData.GetAllDecks().Contains(testDeck));
+            Assert.IsTrue(mockData.GetDecks().Contains(testDeck));
 
             // cleanup
-            testDeck = mockData.GetAllDecks().FirstOrDefault(d => d.Name == testDeck.Name);
+            testDeck = mockData.GetDecks().FirstOrDefault(d => d.Name == testDeck.Name);
             mockData.DeleteDeck(testDeck.Id);
         }
 
@@ -213,7 +213,7 @@ namespace FlashCards.Tests
             };
             testDeck = mockData.AddDeck(testDeck);
             var testDeckId = testDeck.Id;
-            Assert.IsTrue(mockData.GetAllDecks().Contains(testDeck));
+            Assert.IsTrue(mockData.GetDecks().Contains(testDeck));
 
             var model = new VerifyDeleteViewModel
             {
@@ -243,7 +243,7 @@ namespace FlashCards.Tests
             };
             testDeck = mockData.AddDeck(testDeck);
             var testDeckId = testDeck.Id;
-            Assert.IsTrue(mockData.GetAllDecks().Contains(testDeck));
+            Assert.IsTrue(mockData.GetDecks().Contains(testDeck));
 
             var testCard = new FlashCard
             {
@@ -251,9 +251,9 @@ namespace FlashCards.Tests
                 Title = "testCard",
                 Description = "testCatdDescription"
             };
-            testCard = mockData.AddFlashCard(testCard, testDeckId);
+            testCard = mockData.AddCard(testCard, testDeckId);
             var testCardId = testCard.Id;
-            Assert.IsNotNull(mockData.GetFlashCard(testCardId));
+            Assert.IsNotNull(mockData.GetCard(testCardId));
 
             var model = new VerifyDeleteViewModel
             {
