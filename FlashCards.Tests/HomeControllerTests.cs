@@ -1,6 +1,6 @@
 ﻿using FlashCards.Controllers;
 using FlashCards.Models;
-using FlashCards.Services;
+using FlashCards.Repository;
 using FlashCards.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

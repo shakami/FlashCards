@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FlashCards.Entities;
+using FlashCards.Models;
 using FlashCards.Repository;
 using FlashCards.ViewModels;
 using Microsoft.AspNetCore.Mvc;

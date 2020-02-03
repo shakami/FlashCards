@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlashCards.Entities
+namespace FlashCards.Models
 {
     public class Deck
     {

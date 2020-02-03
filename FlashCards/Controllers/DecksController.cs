@@ -2,97 +2,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using FlashCards.Models;
 using FlashCards.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlashCards.Controllers
 {
-    [ApiController]
+    [Route("Decks")]
     public class DecksController : Controller
     {
-        private readonly IFlashCardRepository _flashCardRepository;
-        private readonly IMapper _mapper;
+        private readonly IFlashCardRepository _flashCardData;
 
-        public DecksController(IFlashCardRepository flashCardRepository,
-                                IMapper mapper)
+        public DecksController(IFlashCardRepository flashCardDataService)
         {
-            _flashCardRepository = flashCardRepository ??
-                throw new ArgumentNullException(nameof(flashCardRepository));
-            _mapper = mapper ??
-                throw new ArgumentNullException(nameof(mapper));
+            _flashCardData = flashCardDataService ??
+                throw new ArgumentNullException(nameof(flashCardDataService));
         }
 
-        [HttpGet("decks")]
-        public IActionResult Index()
-        {
-            return View("GetDecks");
-        }
-
-        [HttpOptions("api/decks")]
-        public IActionResult GetDecksOptions()
-        {
-            Response.Headers.Add("Allow", "GET,OPTIONS,POST");
-            return Ok();
-        }
-
-        [HttpOptions("api/decks/{deckId}")]
-        public IActionResult GetDeckOptions()
-        {
-            Response.Headers.Add("Allow", "GET,OPTIONS,DELETE");
-            return Ok();
-        }
-
-        [HttpGet("api/decks")]
+        [HttpGet(Name = "GetDecks")]
         public IActionResult GetDecks()
         {
-            var decksFromRepo = _flashCardRepository.GetDecks();
-            var decksToReturn = _mapper.Map<IEnumerable<DeckDto>>(decksFromRepo);
-            return Ok(decksToReturn);
+            var model = _flashCardData.GetDecks().ToList();
+            return View(model);
         }
 
-        [HttpGet("api/decks/{deckId}", Name = "GetDeck")]
-        public ActionResult<DeckDto> GetDeck(int deckId)
+        [HttpGet("CreateDeck")]
+        public IActionResult CreateDeck()
         {
-            var deckFromRepo = _flashCardRepository.GetDeck(deckId);
-            if (deckFromRepo == null)
+            return View();
+        }
+
+        [HttpPost("CreateDeck")]
+        public IActionResult CreateDeck(Deck model)
+        {
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return RedirectToAction(nameof(CreateDeck), model);
             }
+            _flashCardData.AddDeck(model);
 
-            var deckToReturn = _mapper.Map<DeckDto>(deckFromRepo);
-            return Ok(deckToReturn);
+            return RedirectToAction(nameof(GetDecks));
         }
 
-        [HttpPost("api/decks")]
-        public IActionResult CreateDeck(DeckForCreationDto deck)
-        {
-            var deckEntity = _mapper.Map<Entities.Deck>(deck);
-
-            _flashCardRepository.AddDeck(deckEntity);
-            _flashCardRepository.Save();
-
-            var deckToReturn = _mapper.Map<DeckDto>(deckEntity);
-
-            return CreatedAtRoute(nameof(GetDeck), new { deckId = deckToReturn.Id }, deckToReturn);
-        }
-
-        [HttpDelete("api/decks/{deckId}")]
+        [HttpGet("{deckId}/Delete")]
         public IActionResult DeleteDeck(int deckId)
         {
-            var deckFromRepo = _flashCardRepository.GetDeck(deckId);
-
-            if (deckFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            _flashCardRepository.DeleteDeck(deckFromRepo);
-            _flashCardRepository.Save();
-
-            return NoContent();
+            var deckToRemove = _flashCardData.GetDeck(deckId);
+            _flashCardData.DeleteDeck(deckToRemove);
+            return RedirectToAction(nameof(GetDecks));
         }
     }
 }

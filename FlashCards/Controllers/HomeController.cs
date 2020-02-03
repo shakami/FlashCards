@@ -15,7 +15,7 @@ namespace FlashCards.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Decks");
+            return RedirectToAction("GetDecks", "Decks");
         }
     }
 }

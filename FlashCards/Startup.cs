@@ -1,4 +1,3 @@
-using AutoMapper;
 using FlashCards.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +21,6 @@ namespace FlashCards
         {
             services.AddSingleton<IFlashCardRepository, FlashCardRepository>();
             services.AddControllersWithViews();
-            services.AddAutoMapper(System.AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

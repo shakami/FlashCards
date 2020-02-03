@@ -1,4 +1,4 @@
-﻿using FlashCards.Entities;
+﻿using FlashCards.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
